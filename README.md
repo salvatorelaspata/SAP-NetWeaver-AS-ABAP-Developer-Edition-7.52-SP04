@@ -24,21 +24,28 @@ To build the Docker image, follow these steps:
 docker compose up -d --build
 ```
 
-Go to interactive mode and run the installation script:
+## Workflow
 
-```bash
-docker exec -it sap-abap-752 /bin/bash
-cd /tmp/sapdownloads
-./install.sh
-```
+The Dockerfile is designed to move configuration files and installation scripts into the container, set the necessary permissions.
 
-## Usage
+At the end of the file there is a entrypoint script:
 
-Using docker compose is recommended
+1. Avvia /usr/sbin/uuidd in background (needed for the installation of the system and for the system itself)
+2. Check if the system is already installed by looking for the file /usr/sap/DE1/SYS/profile/DE1_DVEBMGS00_profile.
+   3.1. If the system is not installed, it runs the installation script /install-quiet.sh and then creates the file /installed to indicate that the installation is complete.
+   3.2 If the system is already installed, it starts the SAP system using the command `starts
 
-```bash
-docker compose up -d --build
-```
+## Docker workflow
+
+The Dockerfile is designed to move configuration files and installation scripts into the container, set the necessary permissions.
+
+Using `docker compose up -d --build` to run the image
+
+> Estimated time for the first build and installation: 10-15 min
+
+After the build is complete, the container will start and the installation script will run automatically.
+
+> Estimated time for the installation: 30-60 min (depending on the performance of your machine)
 
 ## Accessing the Container
 
@@ -72,6 +79,10 @@ Into the container, run:
 Dump Database inconsistency: Start transaction SICK.
 
 https://me.sap.com/notes/0003586582
+
+To use in localhost (http) add the following line to the file /etc/hosts:
+
+`127.0.0.1 vhcalnplci`
 
 ## References
 

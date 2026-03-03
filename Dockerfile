@@ -6,6 +6,7 @@ ENV LANG=en_US.UTF-8
 RUN zypper --non-interactive install --replacefiles \
   which hostname expect net-tools iputils wget vim iproute2 \
   unrar less tar gzip uuidd tcsh libaio gcc insserv-compat \
+  procps \
   && zypper clean -a
 
 # uuidd is needed by SAP NW ABAP; create dirs here, daemon is started at runtime
@@ -48,5 +49,8 @@ EXPOSE 3300
 EXPOSE 3200
 # SAP Cloud Connector
 EXPOSE 8443
+
+# Set the entrypoint to run our installation script
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["/entrypoint.sh"]
