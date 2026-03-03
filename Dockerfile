@@ -23,16 +23,17 @@ COPY /sapdownloads/SYBASE_ASE_TestDrive.lic /tmp/sapdownloads/server/TAR/x86_64/
 COPY /resources/INSTALL_README.MD /tmp/sapdownloads/
 COPY /resources/install-quiet.sh /tmp/sapdownloads/
 COPY /resources/instructions /tmp/sapdownloads/
+COPY /resources/entrypoint.sh /entrypoint.sh
 
 # Fix Windows line endings if the files were created on a Windows machine, which would cause the installer to fail with "Syntax error: unexpected end of file"
-RUN sed -i 's/\r//' /tmp/sapdownloads/install-quiet.sh /tmp/sapdownloads/instructions
+RUN sed -i 's/\r//' /tmp/sapdownloads/install-quiet.sh /tmp/sapdownloads/instructions /entrypoint.sh
 
 # Wire up the quiet installer and the instructions as .bashrc
 RUN mv /tmp/sapdownloads/install.sh /tmp/sapdownloads/org_install.sh \
   && ln -s /tmp/sapdownloads/install-quiet.sh /tmp/sapdownloads/install.sh \
   && ln /tmp/sapdownloads/instructions /root/.bashrc \
   && sed -i 's/\r//' /root/.bashrc /tmp/sapdownloads/install-quiet.sh \
-  && chmod +x /tmp/sapdownloads/install-quiet.sh
+  && chmod +x /tmp/sapdownloads/install-quiet.sh /entrypoint.sh
 
 WORKDIR /tmp/sapdownloads
 
@@ -48,4 +49,4 @@ EXPOSE 3200
 # SAP Cloud Connector
 EXPOSE 8443
 
-CMD ["/bin/bash"]
+CMD ["/entrypoint.sh"]

@@ -69,6 +69,8 @@ Into the container, run:
 
 `sed -i 's/\r//' install-quiet.sh`
 
+Dump Database inconsistency: Start transaction SICK.
+
 https://me.sap.com/notes/0003586582
 
 ## References
