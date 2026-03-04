@@ -33,16 +33,27 @@ fi
 if [ "$SAP_INSTALLED" = "false" ]; then
     echo ">>> SAP not installed yet - starting automatic installation..."
     echo "Cambio directory a /tmp/sapdownloads"
-    cd /tmp/sapdownloads 
+    cd /tmp/sapdownloads
     echo "Contenuto della directory:"
     ls -la
     echo "Esecuzione di install.sh..."
     # Automaticamente risponde 'yes' a tutte le domande interattive
     echo "yes" | bash install.sh -k
     echo "Install.sh terminato con codice: $?"
+    SAP_INSTALLED=true
 else
     echo ">>> SAP è già installato, skip installazione."
 fi
 
-echo "=== ENTRYPOINT COMPLETATO, AVVIO BASH INTERATTIVO ==="
-exec bash
+# Avvio automatico di SAP se installato
+if [ "$SAP_INSTALLED" = "true" ]; then
+    echo "=== AVVIO SAP ==="
+    su - npladm -c 'startsap ALL'
+    echo "startsap terminato con codice: $?"
+    echo "=== VERIFICA STATO SAP ==="
+    su - npladm -c 'sapcontrol -nr 00 -function GetProcessList'
+fi
+
+echo "=== ENTRYPOINT COMPLETATO ==="
+# Mantiene il container in esecuzione
+exec tail -f /dev/null
