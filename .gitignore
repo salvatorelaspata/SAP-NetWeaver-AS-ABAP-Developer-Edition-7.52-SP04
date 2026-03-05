@@ -1,2 +1,4 @@
 downloads/*
-sapdownloads/
+!downloads/.gitkeep
+sapdownloads/*
+!sapdownloads/.gitkeep
