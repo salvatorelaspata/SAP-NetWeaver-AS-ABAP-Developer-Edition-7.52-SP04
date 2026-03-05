@@ -15,9 +15,6 @@ Questa guida descrive i passaggi per generare e installare la chiave di licenza 
 3. **Elimina licenza temporanea**: Vai alla scheda **Digitally signed licenses**, seleziona la licenza esistente (tipo "Evaluation") e clicca **Delete** (o right-click > Delete). [community.sap](https://community.sap.com/t5/application-development-discussions/abap-7-52-sp04-developer-edition-need-a-valid-developer-access-key/m-p/12117519)
 4. **Copia Hardware Key**: Nota il **Hardware Key** visualizzato in alto nella schermata (es. un codice alfanumerico come "1234567890"). [scribd](https://www.scribd.com/document/673753044/Installing-as-ABAP-7-52-SP04-Developer-Edition-on-VMWare-and-Linux)
 
-Lo screenshot allegato mostra la schermata di SLICENSE dopo l'installazione di una licenza SAP, con i campi per Expiry, Hardware Key e note di installazione. Il Hardware Key è evidenziato in rosso (valido file).
-![alt text](image.png)
-
 5. **Richiedi licenza online**:
    - Visita https://go.support.sap.com/minisap/.
    - Seleziona **NPL – SAP NetWeaver 7.x (Sybase ASE)** come System ID.
